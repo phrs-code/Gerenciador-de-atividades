@@ -1,5 +1,7 @@
 const uuid = require('uuid');
 
+const { generateHash } = require('../utils/hashProvider')
+
 let users = [];
 
 const list = (req, res) => {
@@ -14,16 +16,18 @@ const getById = (req, res) => {
     return res.status(200).json(user);
 };
 
-const create = (req, res) => {
+const create = async(req, res) => {
     const { name, email, password, age } = req.body;
 
     const id = uuid.v4();
+
+    const hashedPassword = await generateHash(password);
 
     const user = {
         id,
         name,
         email,
-        password,
+        password: hashedPassword,
         age
     };
 
@@ -75,5 +79,6 @@ module.exports = {
     getById,
     create,
     update,
-    remove
+    remove,
+    usersDatabase: users
 }

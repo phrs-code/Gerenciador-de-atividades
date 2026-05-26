@@ -1,3 +1,5 @@
+const uuid = require('uuid');
+
 let tasks = [];
 
 const list = (req, res) => {
@@ -7,13 +9,22 @@ const list = (req, res) => {
 const getById = (req, res) => {
     const { id } = req.params;
 
-    const task = tasks.find(t => t.id === Number(id));
+    const task = tasks.find(t => t.id === id);
+
+    if(!task) {
+        return response.status(404).json({
+            error: "@tasks/getById",
+            message: `Task ${id} não encontrada`
+        });
+    };
 
     return res.status(200).json(task);
 };
 
 const create = (req, res) => {
-    const { id, title, description, priority, status } = req.body;
+    const { title, description, priority, status } = req.body;
+
+    const id = uuid.v4();
 
     const task = {
         id,
@@ -33,14 +44,17 @@ const update = (req, res) => {
 
     const { title, description, priority, status } = req.body;
 
-    const taskIndex = tasks.findIndex((t) => t.id === Number(id));
+    const taskIndex = tasks.findIndex((t) => t.id === id);
 
     if (taskIndex < 0) {
-        return res.status(404).json({ error: "Task não encontrado." });
+        return res.status(404).json({
+            error: "Task não encontrado.",
+            message: `Task ${id} não encontrada.`
+        });
     }
 
     const taskUpdated = {
-        id: Number(id),
+        id,
         title,
         description,
         priority,
@@ -55,7 +69,7 @@ const update = (req, res) => {
 const remove = (req, res) => {
     const { id } = req.params;
 
-    const taskIndex = tasks.findIndex((t) => t.id === Number(id));
+    const taskIndex = tasks.findIndex((t) => t.id === id);
 
     if (taskIndex < 0) {
         res.end("Task não encontrada.");
