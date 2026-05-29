@@ -1,4 +1,7 @@
 const express = require('express');
+
+require('./config/database');
+
 const { PORT } = require('./config/env')
 const userRoutes = require('./routes/users.routes')
 const tasksRoutes = require('./routes/tasks.routes')
