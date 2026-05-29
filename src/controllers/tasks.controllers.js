@@ -22,7 +22,7 @@ const getById = (req, res) => {
 };
 
 const create = (req, res) => {
-    const { title, description, priority, status } = req.body;
+    const { title, description, priority, status, user } = req.body;
 
     const id = uuid.v4();
 
@@ -31,7 +31,8 @@ const create = (req, res) => {
         title,
         description,
         priority,
-        status
+        status,
+        user
     };
 
     tasks.push(task);
@@ -42,7 +43,7 @@ const create = (req, res) => {
 const update = (req, res) => {
     const { id } = req.params;
 
-    const { title, description, priority, status } = req.body;
+    const { title, description, priority, status, user } = req.body;
 
     const taskIndex = tasks.findIndex((t) => t.id === id);
 
@@ -58,7 +59,8 @@ const update = (req, res) => {
         title,
         description,
         priority,
-        status
+        status,
+        user
     }
 
     tasks[taskIndex] = taskUpdated;
