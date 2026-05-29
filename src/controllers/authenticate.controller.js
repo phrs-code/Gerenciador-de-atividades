@@ -24,13 +24,16 @@ const login = async(req, res) => {
     if(!isValidPassword) {
         return res.status(400).json(loginErrorMessage);
     };
+
+    const userLoged = { ...user }
+
     const token = jwt.sign(user, JWT_SECRET, {
         expiresIn: "5h",
     });
 
-    delete user.password;
+    delete userLoged.password;
 
-   return res.json({ ... user, token });
+   return res.json({ ... userLoged, token });
 };
 
 module.exports = {

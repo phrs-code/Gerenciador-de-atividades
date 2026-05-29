@@ -28,7 +28,9 @@ const create = async(req, res) => {
         name,
         email,
         password: hashedPassword,
-        age
+        age,
+        createdAt: new Date(),
+        updatedAt: new Date()
     };
 
     users.push(user);
@@ -36,7 +38,7 @@ const create = async(req, res) => {
     return res.status(201).json(user);
 };
 
-const update = (req, res) => {
+const update = async(req, res) => {
     const { id } = req.params;
 
     const { name, email, password, age } = req.body;
@@ -47,12 +49,22 @@ const update = (req, res) => {
         return res.status(404).json({ error: "Usuário não encontrado." });
     }
 
+    const { createdAt } = users[userIndex];
+
     const userUpdate = {
         id,
         name,
         email,
         password,
-        age
+        age,
+        createdAt,
+        updatedAt: new Date()
+    }
+
+    if (password){
+        userUpdate.password = await generateHash(password);
+    }else{
+        userUpdate.password = users[userIndex].password;
     }
 
     users[userIndex] = userUpdate;

@@ -1,0 +1,364 @@
+type: collection.insomnia.rest/5.0
+schema_version: "5.1"
+name: final_project
+meta:
+  id: wrk_22eaa90dcc994cbab374bfd8dce1a909
+  created: 1779730500877
+  modified: 1779730500877
+  description: ""
+collection:
+  - name: users
+    meta:
+      id: fld_43cb80b7be254f81869c58282d1d572e
+      created: 1779730686292
+      modified: 1779730686292
+      sortKey: -1779730686292
+      description: ""
+    children:
+      - url: http://localhost:3333/users
+        name: users - list
+        meta:
+          id: req_4b46aeb49f504da3b328c52143f29171
+          created: 1779730506822
+          modified: 1779738839534
+          isPrivate: false
+          description: ""
+          sortKey: -1779730698472
+        method: GET
+        headers:
+          - name: User-Agent
+            value: insomnia/12.5.0
+            description: ""
+            disabled: false
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: http://localhost:3333/users
+        name: users - create
+        meta:
+          id: req_3f70ad5c26eb4804ab4bd0ed18c09a6c
+          created: 1779730605934
+          modified: 1779833574904
+          isPrivate: false
+          description: ""
+          sortKey: -1779730698447
+        method: POST
+        body:
+          mimeType: application/json
+          text: |-
+            {
+                    "name": "Beatriz Souza",
+                    "email": "beatriz.souza@example.com",
+                    "password": "hashed_password_789",
+                    "age": 22
+                }
+        headers:
+          - name: Content-Type
+            value: application/json
+          - name: User-Agent
+            value: insomnia/12.5.0
+            description: ""
+            disabled: false
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: http://localhost:3333/users/1
+        name: users - read
+        meta:
+          id: req_a0b0c8ab8a984b46947c797ae108a939
+          created: 1779730634338
+          modified: 1779740678421
+          isPrivate: false
+          description: ""
+          sortKey: -1779730698440.75
+        method: GET
+        headers:
+          - name: User-Agent
+            value: insomnia/12.5.0
+            description: ""
+            disabled: false
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: http://localhost:3333/users/2
+        name: users - update
+        meta:
+          id: req_182b747026c4413cb4ccb8c426a7f687
+          created: 1779730646557
+          modified: 1779740896041
+          isPrivate: false
+          description: ""
+          sortKey: -1779730698437.625
+        method: PUT
+        body:
+          mimeType: application/json
+          text: |-
+            {
+            	"name": "Joana Santana",
+            	"email": "joanaa.dev@gmail.com",
+            	"password": "palavra_passe21",
+            	"age": 1993
+            }
+        headers:
+          - name: Content-Type
+            value: application/json
+          - name: User-Agent
+            value: insomnia/12.5.0
+            description: ""
+            disabled: false
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: http://localhost:3333/users/5
+        name: users - delete
+        meta:
+          id: req_d8cc4e660bd941978939ac711fa48f69
+          created: 1779730661032
+          modified: 1779745008788
+          isPrivate: false
+          description: ""
+          sortKey: -1779730698434.5
+        method: DELETE
+        headers:
+          - name: User-Agent
+            value: insomnia/12.5.0
+            description: ""
+            disabled: false
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+  - name: tasks
+    meta:
+      id: fld_7f3e635eae3d45f099f9874e1db6b6ac
+      created: 1779746476032
+      modified: 1779746476032
+      sortKey: -1779746476032
+      description: ""
+    children:
+      - url: http://localhost:3333/tasks
+        name: tasks - list
+        meta:
+          id: req_bf6487b0d40149b0940595dc2c846246
+          created: 1779746480822
+          modified: 1780071699779
+          isPrivate: false
+          description: ""
+          sortKey: -1779746485067
+        method: GET
+        headers:
+          - name: User-Agent
+            value: insomnia/12.5.0
+            description: ""
+            disabled: false
+        authentication:
+          type: bearer
+          token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYwNWY4YWJhLTU1OTgtNDk0My04ZDEzLThjZDcxY2JjZmUyYSIsIm5hbWUiOiJCZWF0cml6IFNvdXphIiwiZW1haWwiOiJiZWF0cml6LnNvdXphQGV4YW1wbGUuY29tIiwicGFzc3dvcmQiOiIkMmIkMDgkay5wbkRTMWx5bUc3MG9rUkVucFZtLnZPNGxrR2tGelQ2LjNYM1ZOVnp5YnQvdmcydFR1WEciLCJhZ2UiOjIyLCJpYXQiOjE3ODAwNzE1ODIsImV4cCI6MTc4MDA4OTU4Mn0.ixKZAi_tA_RdrDdegen3SqOLhAxWmQuL0QEYQsbDs0g
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: http://localhost:3333/tasks
+        name: tasks - create
+        meta:
+          id: req_ed6fa6f607a846e3a2a0f6463f031ad1
+          created: 1779746677053
+          modified: 1780074859410
+          isPrivate: false
+          description: ""
+          sortKey: -1779746485042
+        method: POST
+        body:
+          mimeType: application/json
+          text: >2-
+                {
+                    "title": "Desenvolver Tela de Login",
+                    "description": "Criar a interface e a validação do formulário de login do usuário.",
+                    "priority": "alta",
+                    "status": "em andamento",
+            			"user": "Beatriz Souza"
+                }
+        headers:
+          - name: Content-Type
+            value: application/json
+          - name: User-Agent
+            value: insomnia/12.5.0
+            description: ""
+            disabled: false
+        authentication:
+          type: bearer
+          disabled: false
+          token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImUyMWFjN2ExLTE1YzctNGYzNC05YzkxLWYyYmJmNTBhYWQ0NiIsIm5hbWUiOiJCZWF0cml6IFNvdXphIiwiZW1haWwiOiJiZWF0cml6LnNvdXphQGV4YW1wbGUuY29tIiwicGFzc3dvcmQiOiIkMmIkMDgkUTFicHJPUzlFWU12QWcyRGtVMzdWdUZQWTRhSHp0djBKaEJsUW4va1U1bGo4NjZzY1podU8iLCJhZ2UiOjIyLCJpYXQiOjE3ODAwNzQ4MjksImV4cCI6MTc4MDA5MjgyOX0.8fJi_QR2MnZvTA3_QmoYHqM6HGslPYeRXjw-60K3fr4
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: http://localhost:3333/tasks/f708feee-1c9f-47fe-8052-7c684aa561de
+        name: tasks - read
+        meta:
+          id: req_24fb9a3008e04a56ae16958e9c5cf29a
+          created: 1779746707607
+          modified: 1779812693337
+          isPrivate: false
+          description: ""
+          sortKey: -1779746485035.75
+        method: GET
+        headers:
+          - name: User-Agent
+            value: insomnia/12.5.0
+            description: ""
+            disabled: false
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: http://localhost:3333/tasks/6bbcd152-0762-4bda-a4ab-b65cb09b7605
+        name: tasks - update
+        meta:
+          id: req_0c3546d8c03945459537f2252f1480bf
+          created: 1779746755833
+          modified: 1780073886727
+          isPrivate: false
+          description: ""
+          sortKey: -1779746485034.1875
+        method: PUT
+        body:
+          mimeType: application/json
+          text: >2-
+                {
+                    "title": "Desenvolver Tela de Login",
+                    "description": "Criar a interface e a validação do formulário de login do usuário.",
+                    "priority": "média",
+                    "status": "em andamento",
+            			"user": "Beatriz Souza"
+                }
+        headers:
+          - name: Content-Type
+            value: application/json
+          - name: User-Agent
+            value: insomnia/12.5.0
+            description: ""
+            disabled: false
+        authentication:
+          type: bearer
+          token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVmNzk1ZDAzLWQwMzctNDRkNy1hNTFhLTgxNjBjMmQ3YWM0ZCIsIm5hbWUiOiJCZWF0cml6IFNvdXphIiwiZW1haWwiOiJiZWF0cml6LnNvdXphQGV4YW1wbGUuY29tIiwicGFzc3dvcmQiOiIkMmIkMDgkQzVIYWFaU2U4WDY3SzV3eXl2YkNGZWZOcHFGYXVZNjdvRDBLWllFZ1ZUWmdTRjJJUU5SSU8iLCJhZ2UiOjIyLCJpYXQiOjE3ODAwNzM3NDAsImV4cCI6MTc4MDA5MTc0MH0.N7YTHmLAYlNqaBj5wAuwPzndIUAQFxPKQceG431gZUY
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: http://localhost:3333/tasks/19359279-7dba-407e-9678-904eac9094a5
+        name: tasks - delete
+        meta:
+          id: req_ea0575c8050745d2a9c978359a12177d
+          created: 1779746781462
+          modified: 1779812678532
+          isPrivate: false
+          description: ""
+          sortKey: -1779746485032.625
+        method: DELETE
+        headers:
+          - name: User-Agent
+            value: insomnia/12.5.0
+            description: ""
+            disabled: false
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+  - name: authenticate
+    meta:
+      id: fld_ccba00f4b17d4b298c5c9fdcf2a5b6b1
+      created: 1779833426815
+      modified: 1779833426815
+      sortKey: -1779833426815
+      description: ""
+    children:
+      - url: http://localhost:3333/authenticate
+        name: Login
+        meta:
+          id: req_efc236bc526248d386cdac3eba2ac4cc
+          created: 1779833432044
+          modified: 1779833609222
+          isPrivate: false
+          description: ""
+          sortKey: -1779833443254
+        method: POST
+        body:
+          mimeType: application/json
+          text: |-
+            {
+            	"email": "beatriz.souza@example.com",
+              "password": "hashed_password_789"
+            }
+        headers:
+          - name: Content-Type
+            value: application/json
+          - name: User-Agent
+            value: insomnia/12.5.0
+            description: ""
+            disabled: false
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+cookieJar:
+  name: Default Jar
+  meta:
+    id: jar_e252835b285c6adfdc282dd6d7741342619dce22
+    created: 1779730500881
+    modified: 1779730500881
+environments:
+  name: Base Environment
+  meta:
+    id: env_e252835b285c6adfdc282dd6d7741342619dce22
+    created: 1779730500879
+    modified: 1779730500879
+    isPrivate: false

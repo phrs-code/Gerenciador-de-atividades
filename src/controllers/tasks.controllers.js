@@ -32,7 +32,9 @@ const create = (req, res) => {
         description,
         priority,
         status,
-        user
+        user,
+        createdAt: new Date(),
+        updatedAt: new Date()
     };
 
     tasks.push(task);
@@ -52,7 +54,9 @@ const update = (req, res) => {
             error: "Task não encontrado.",
             message: `Task ${id} não encontrada.`
         });
-    }
+    };
+
+    const { createdAt } = tasks[taskIndex]
 
     const taskUpdated = {
         id,
@@ -60,7 +64,9 @@ const update = (req, res) => {
         description,
         priority,
         status,
-        user
+        user,
+        createdAt,
+        updatedAt: new Date()
     }
 
     tasks[taskIndex] = taskUpdated;
