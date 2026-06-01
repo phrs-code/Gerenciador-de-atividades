@@ -1,5 +1,7 @@
 const mongoose = require("mongoose");
 
+const { generateHash } = require("../utils/hashProvider")
+
 const UserSchema = new mongoose.Schema({
     name: {
         type: String,

@@ -1,5 +1,3 @@
-const uuid = require('uuid');
-
 const { generateHash } = require('../utils/hashProvider');
 
 const UserModel = require('../model/user.model');
@@ -51,7 +49,7 @@ const create = async(req, res) => {
         const user = await UserModel.create({
         name,
         email,
-        password: hashedPassword,
+        password,
         age,
     });
 
