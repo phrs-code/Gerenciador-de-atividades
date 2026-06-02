@@ -11,10 +11,14 @@ const TaskSchema = new mongoose.Schema({
     },
     priority: {
         type: String,
+        enum: ['baixa', 'média', 'alta'],
+        default: 'média',
         required: true
     },
     status: {
         type: String,
+        enum: ['não iniciado', 'em andamento', 'concluído'],
+        default: 'não iniciado',
         required: true
     },
     userId: {
