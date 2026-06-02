@@ -2,16 +2,11 @@ const taskModel = require("../model/task.model")
 
 const list = async(req, res) => {
     try {
-
-        const task = await taskModel.find();
-        return res.json(task);
-
+        // Retorna apenas as tasks pertencentes a este usuário
+        const tasks = await taskModel.find({ userId: req.userId });
+        return res.json(tasks);
     } catch (error) {
-
-        return res.status(400).json({
-            error: "@task/list",
-            message: error.message || "Failed to list task"
-        })
+        return res.status(500).json({ error: 'Erro ao buscar tasks' });
     }
 };
 
@@ -21,10 +16,10 @@ const getById = async(req, res) => {
 
     try {
         
-        const task = await taskModel.findById(id);
+        const task = await taskModel.findOneAndDelete({ _id: id, userId: req.userId })
 
         if (!task){
-            throw new error();
+            throw new Error();
         };
 
         return res.json(task);
@@ -40,7 +35,7 @@ const getById = async(req, res) => {
 
 const create = async(req, res) => {
 
-    const { title, description, priority, status, user } = req.body;
+    const { title, description, priority, status } = req.body;
 
     try {
         
@@ -49,7 +44,7 @@ const create = async(req, res) => {
         description,
         priority,
         status,
-        user,
+        userId: req.userId,
     });
 
     return res.status(201).json(task);
@@ -66,24 +61,22 @@ const create = async(req, res) => {
 const update = async(req, res) => {
 
     const { id } = req.params;
-    const { title, description, priority, status, user } = req.body;
+    const { title, description, priority, status } = req.body;
 
     try {
+        // CORRIGIDO: findOneAndUpdate usando o filtro de dono da task
+        const taskUpdated = await taskModel.findOneAndUpdate(
+            { _id: id, userId: req.userId }, 
+            { title, description, priority, status }, // payload de atualização
+            { new: true }
+        );
 
-     const taskUpdated = await taskModel.findByIdAndUpdate(id, {
-        title,
-        description,
-        priority,
-        status,
-        user      
-    }, {
-        new: true
-    });
+        if (!taskUpdated) {
+            throw new Error("Task not found or does not belong to you");
+        }
 
-    return res.json(taskUpdated);   
-
+        return res.json(taskUpdated);
     } catch (error) {
-        
         return res.status(400).json({
             error: "@tasks/update",
             message: error.message || "Failed to update task"
@@ -97,7 +90,7 @@ const remove = async(req, res) => {
 
     try {
         
-        const taskRemoved = await taskModel.findByIdAndDelete(id);
+        const taskRemoved = await taskModel.findOneAndDelete({ _id: id, userId: req.userId });
 
         if (!taskRemoved) {
             throw new Error();
