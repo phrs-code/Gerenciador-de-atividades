@@ -1,35 +1,47 @@
 const jwt = require('jsonwebtoken')
+const { JWT_SECRET } = require('../config/env')
 
-const { usersDatabase } = require('./users.controllers')
+const UserModel = require("../model/user.model")
 
 const { compareHash } = require('../utils/hashProvider')
 
 const login = async(req, res) => {
-    const { email, password } = req.body;
+    
+    try{
+        const { email, password } = req.body;
 
-    const user = usersDatabase.find(u => u.email === email);
+        const user = await UserModel.findOne({ email }).lean();
 
-    const loginErrorMessage = {
-            error: "@authenticate/login",
-            message: "E-mail ou senha inválidos"
-        }
+        const loginErrorMessage = {
+                error: "@authenticate/login",
+                message: "E-mail ou senha inválidos"
+            }
 
-    if(!user) {
-        return res.status(400).json(loginErrorMessage);
-    };
+        if(!user) {
+            return res.status(401).json(loginErrorMessage);
+        };
 
-    const isValidPassword = await compareHash(password, user.password);
+        const isValidPassword = await compareHash(password, user.password);
 
-    if(!isValidPassword) {
-        return res.status(400).json(loginErrorMessage);
-    };
-    const token = jwt.sign(user, 'secret', {
-        expiresIn: "5h",
-    });
+        if(!isValidPassword) {
+            return res.status(401).json(loginErrorMessage);
+        };
 
-    delete user.password;
+        const token = jwt.sign({ id: user._id }, JWT_SECRET, {
+            expiresIn: "5h",
+        });
 
-   return res.json({ ... user, token });
+        delete user.password;
+
+        return res.json({ ...user, token });
+
+    }catch(error){
+
+        return res.status(500).json({
+            error: "@authenticate/server-error",
+            message: "Ocorreu um erro interno ao tentar realizar o login"
+        });
+    }
 };
 
 module.exports = {

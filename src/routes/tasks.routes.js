@@ -5,14 +5,14 @@ const routes = Router();
 const tasksControllers = require('../controllers/tasks.controllers')
 const { verifyAuthenticate } = require('../middlewares/verifyAuthentication')
 
-routes.get('/tasks', tasksControllers.list);
+routes.get('/tasks',verifyAuthenticate, tasksControllers.list);
 
 routes.post('/tasks', verifyAuthenticate, tasksControllers.create);
 
-routes.get('/tasks/:id', tasksControllers.getById);
+routes.get('/tasks/:id',verifyAuthenticate, tasksControllers.getById);
 
-routes.put('/tasks/:id', tasksControllers.update);
+routes.put('/tasks/:id',verifyAuthenticate, tasksControllers.update);
 
-routes.delete('/tasks/:id', tasksControllers.remove);
+routes.delete('/tasks/:id',verifyAuthenticate, tasksControllers.remove);
 
 module.exports = routes;

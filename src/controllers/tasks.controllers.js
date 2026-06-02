@@ -1,83 +1,110 @@
-const uuid = require('uuid');
+const taskModel = require("../model/task.model")
 
-let tasks = [];
-
-const list = (req, res) => {
-    return res.status(200).json(tasks);
+const list = async(req, res) => {
+    try {
+        // Retorna apenas as tasks pertencentes a este usuário
+        const tasks = await taskModel.find({ userId: req.userId });
+        return res.json(tasks);
+    } catch (error) {
+        return res.status(500).json({ error: 'Erro ao buscar tasks' });
+    }
 };
 
-const getById = (req, res) => {
+const getById = async(req, res) => {
+
     const { id } = req.params;
 
-    const task = tasks.find(t => t.id === id);
+    try {
+        
+        const task = await taskModel.findOneAndDelete({ _id: id, userId: req.userId })
 
-    if(!task) {
-        return response.status(404).json({
-            error: "@tasks/getById",
-            message: `Task ${id} não encontrada`
+        if (!task){
+            throw new Error();
+        };
+
+        return res.json(task);
+
+    } catch (error) {
+        
+        return res.status(400).json({
+            error: "@task/getById",
+            message: error.message || "Task not found"
         });
-    };
-
-    return res.status(200).json(task);
+    }
 };
 
-const create = (req, res) => {
+const create = async(req, res) => {
+
     const { title, description, priority, status } = req.body;
 
-    const id = uuid.v4();
-
-    const task = {
-        id,
+    try {
+        
+        const task = await taskModel.create({
         title,
         description,
         priority,
-        status
-    };
-
-    tasks.push(task);
+        status,
+        userId: req.userId,
+    });
 
     return res.status(201).json(task);
-};
 
-const update = (req, res) => {
-    const { id } = req.params;
-
-    const { title, description, priority, status } = req.body;
-
-    const taskIndex = tasks.findIndex((t) => t.id === id);
-
-    if (taskIndex < 0) {
-        return res.status(404).json({
-            error: "Task não encontrado.",
-            message: `Task ${id} não encontrada.`
+    } catch (error) {
+        
+        return res.status(400).json({
+            error: "@tasks/create",
+            message: error.message || "Failed to create task"
         });
     }
-
-    const taskUpdated = {
-        id,
-        title,
-        description,
-        priority,
-        status
-    }
-
-    tasks[taskIndex] = taskUpdated;
-
-    return res.status(200).json(taskUpdated);
 };
 
-const remove = (req, res) => {
+const update = async(req, res) => {
+
+    const { id } = req.params;
+    const { title, description, priority, status } = req.body;
+
+    try {
+        // CORRIGIDO: findOneAndUpdate usando o filtro de dono da task
+        const taskUpdated = await taskModel.findOneAndUpdate(
+            { _id: id, userId: req.userId }, 
+            { title, description, priority, status }, // payload de atualização
+            { new: true }
+        );
+
+        if (!taskUpdated) {
+            throw new Error("Task not found or does not belong to you");
+        }
+
+        return res.json(taskUpdated);
+    } catch (error) {
+        return res.status(400).json({
+            error: "@tasks/update",
+            message: error.message || "Failed to update task"
+        });
+    }
+};
+
+const remove = async(req, res) => {
+
     const { id } = req.params;
 
-    const taskIndex = tasks.findIndex((t) => t.id === id);
+    try {
+        
+        const taskRemoved = await taskModel.findOneAndDelete({ _id: id, userId: req.userId });
 
-    if (taskIndex < 0) {
-        res.end("Task não encontrada.");
-    };
+        if (!taskRemoved) {
+            throw new Error();
+        }
 
-    tasks.splice(taskIndex, 1);
+        return res.status(204).send();
 
-    return res.status(200).end("Task deletada com sucesso.")
+    } catch (error) {
+
+        return res.status(400).json({
+            error: "@task/delete",
+            message: error.message || "Failed to delete task"
+        });
+    }
 }
 
 module.exports = {

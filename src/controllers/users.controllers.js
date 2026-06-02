@@ -1,77 +1,121 @@
-const uuid = require('uuid');
+const { generateHash } = require('../utils/hashProvider');
 
-const { generateHash } = require('../utils/hashProvider')
+const UserModel = require('../model/user.model');
 
-let users = [];
+const list = async(req, res) => {
 
-const list = (req, res) => {
-    return res.status(200).json(users);
+    try {
+        const users = await UserModel.find({}, { password: 0 });
+        res.json(users);
+
+    } catch(error) {
+        return res.status(400).json({
+            error: "@users/list",
+            message: "Failed to list users"
+        });
+    }
 };
 
-const getById = (req, res) => {
+const getById = async(req, res) => {
+
     const { id } = req.params;
 
-    const user = users.find(u => u.id === id);
+    try{
 
-    return res.status(200).json(user);
+        const user = await UserModel.findById(id);
+
+        if (!user) {
+            throw new Error();
+        }
+
+        return res.json(user);
+
+    } catch (error) {
+
+        return res.status(200).json({
+            error: "@user/getById",
+            message: error.message || "User not found"
+        });
+    };
 };
 
 const create = async(req, res) => {
     const { name, email, password, age } = req.body;
 
-    const id = uuid.v4();
-
     const hashedPassword = await generateHash(password);
 
-    const user = {
-        id,
+    try{
+
+        const user = await UserModel.create({
         name,
         email,
-        password: hashedPassword,
-        age
-    };
-
-    users.push(user);
+        password,
+        age,
+    });
 
     return res.status(201).json(user);
+
+    } catch(error) {
+        
+        return res.status(400).json({
+            error: "@user/create",
+            message: error.message || "Failed to create user."
+        })
+    };
 };
 
-const update = (req, res) => {
+const update = async(req, res) => {
     const { id } = req.params;
 
     const { name, email, password, age } = req.body;
 
-    const userIndex = users.findIndex((u) => u.id === id);
+    try {
+        const userUpdate = await UserModel.findByIdAndUpdate(id, {
+            name,
+            email,
+            password,
+            age
+        }, 
+        { new: true }
+    );
 
-    if (userIndex < 0) {
-        return res.status(404).json({ error: "Usuário não encontrado." });
-    }
+        if (!userUpdate) {
+            throw new error();
+        }
 
-    const userUpdate = {
-        id,
-        name,
-        email,
-        password,
-        age
-    }
+        return res.json(userUpdate);
 
-    users[userIndex] = userUpdate;
+    } catch (error) {
 
-    return res.status(200).json(userUpdate);
-};
-
-const remove = (req, res) => {
-    const { id } = req.params;
-
-    const userIndex = users.findIndex((u) => u.id === id);
-
-    if (userIndex < 0) {
-        res.end("Usuário não encontrado.");
+        return res.status(400).json({
+            error: "@user/update",
+            message: error.message || "User not found"
+        });
     };
 
-    users.splice(userIndex, 1);
+};
 
-    return res.status(200).end("Usuário deletado com sucesso.")
+const remove = async(req, res) => {
+
+    const { id } = req.params;
+
+    try {
+
+        const userDeleted = await UserModel.findByIdAndDelete(id);
+
+        if (!userDeleted) {
+            throw new error();
+        }
+
+        return res.status(204).send();
+
+    } catch (error) {
+
+        return res.status(400).json({
+            error: "@user/delete",
+            message: error.message || "User not found"
+        })
+    }
 }
 
 module.exports = {
@@ -80,5 +124,4 @@ module.exports = {
     create,
     update,
     remove,
-    usersDatabase: users
 }
