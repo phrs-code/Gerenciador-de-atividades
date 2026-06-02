@@ -1,0 +1,109 @@
+.task-list { list-style: none; padding: 0; display: grid; gap: var(--space-3); }
+.task {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: var(--space-4);
+  box-shadow: var(--shadow);
+}
+.task-head { display: flex; justify-content: space-between; align-items: start; gap: var(--space-3); }
+.task-head h3 { margin: 0; font-size: var(--text-lg); }
+.task p { color: var(--text-soft); margin: var(--space-2) 0; }
+.task-foot {
+  display: flex; justify-content: space-between; align-items: center;
+  margin-top: var(--space-3); padding-top: var(--space-3);
+  border-top: 1px solid var(--border);
+  font-size: var(--text-sm); color: var(--text-mute);
+}
+.badge {
+  font-size: 12px; font-weight: 600;
+  padding: 4px 10px; border-radius: 999px;
+}
+.badge-todo  { background: #fef3c7; color: #92400e; }
+.badge-doing { background: #dbeafe; color: #1e40af; }
+.badge-done  { background: #d1fae5; color: #065f46; }
+.empty-state {
+  text-align: center; padding: var(--space-8);
+  background: var(--surface); border: 1px dashed var(--border);
+  border-radius: var(--radius);
+}
+
+.actions {
+  display: flex;
+  gap: var(--space-2);
+}
+
+.btn-ghost {
+  background: transparent;
+  border: 1px solid var(--border);
+  color: var(--text-soft);
+  border-radius: 6px;
+  padding: 6px 12px;
+  cursor: pointer;
+  font-size: 13px;
+  font-weight: 600;
+  font-family: inherit;
+}
+
+.btn-ghost:hover {
+  background: var(--border);
+  color: var(--text);
+}
+
+.btn-ghost.danger {
+  color: var(--danger);
+  border-color: var(--danger);
+}
+
+.btn-ghost.danger:hover {
+  background: var(--danger);
+  color: #fff;
+}
+
+.tasks {
+  max-width: 680px;
+  margin: var(--space-8) auto;
+  padding: 0 var(--space-4);
+}
+
+.tasks-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: var(--space-6);
+}
+
+.tasks-header h2 {
+  margin: 0;
+  font-size: var(--text-xl);
+}
+
+.task-form {
+  max-width: 560px;
+  margin: var(--space-6) auto;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: var(--space-6);
+  display: flex; flex-direction: column; gap: var(--space-2);
+}
+.task-form label { font-weight: 600; font-size: var(--text-sm); margin-top: var(--space-3); }
+.task-form input, .task-form textarea, .task-form select {
+  padding: 10px 12px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  font-size: var(--text-base);
+  background: var(--surface);
+  color: var(--text);
+  font-family: inherit;
+}
+.task-form input:focus,
+.task-form textarea:focus,
+.task-form select:focus {
+  outline: 2px solid var(--primary);
+  outline-offset: 2px;
+}
+.form-actions {
+  display: flex; gap: var(--space-3); justify-content: flex-end;
+  margin-top: var(--space-4);
+}
