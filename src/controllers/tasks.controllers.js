@@ -35,7 +35,7 @@ const getById = async(req, res) => {
 
 const create = async(req, res) => {
 
-    const { titulo, descricao, prioridade, status } = req.body;
+    const { titulo, descricao, prioridade, status, categoria } = req.body;
 
     try {
         
@@ -44,6 +44,7 @@ const create = async(req, res) => {
         descricao,
         prioridade,
         status,
+        categoria,
         userId: req.userId,
     });
 
@@ -61,13 +62,13 @@ const create = async(req, res) => {
 const update = async(req, res) => {
 
     const { id } = req.params;
-    const { titulo, descricao, prioridade, status } = req.body;
+    const { titulo, descricao, prioridade, status, categoria } = req.body;
 
     try {
         // CORRIGIDO: findOneAndUpdate usando o filtro de dono da task
         const taskUpdated = await taskModel.findOneAndUpdate(
             { _id: id, userId: req.userId }, 
-            { titulo, descricao, prioridade, status }, // payload de atualização
+            { titulo, descricao, prioridade, status, categoria }, // payload de atualização
             { new: true }
         );
 

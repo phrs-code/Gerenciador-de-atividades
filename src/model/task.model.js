@@ -21,6 +21,10 @@ const TaskSchema = new mongoose.Schema({
         default: 'média',
         required: true
     },
+    categoria: {
+        type: String,
+        required: true
+    },
     userId: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'users',
