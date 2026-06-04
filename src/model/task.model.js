@@ -1,15 +1,15 @@
 const mongoose = require('mongoose');
 
 const TaskSchema = new mongoose.Schema({
-    title: {
+    titulo: {
         type: String,
         required: true
     },
-    description: {
+    descricao: {
         type: String,
         required: true
     },
-    priority: {
+    prioridade: {
         type: String,
         enum: ['baixa', 'média', 'alta'],
         default: 'média',
