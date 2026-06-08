@@ -20,7 +20,17 @@ const UserSchema = new mongoose.Schema({
     age: {
         type: Number,
         required: true
-    }
+    },
+    papel: {
+        type: String
+    },
+    departamento: {
+        type: String
+    },
+    anos_empresa: {
+        type: Number
+    },
+
 },
 {
     timestamps: true

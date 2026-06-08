@@ -14,9 +14,10 @@ const getById = async(req, res) => {
 
     const { id } = req.params;
 
+    
     try {
         
-        const task = await taskModel.findOneAndDelete({ _id: id, userId: req.userId })
+        const task = await taskModel.findOne({ _id: id, userId: req.userId })
 
         if (!task){
             throw new Error();
@@ -88,6 +89,10 @@ const update = async(req, res) => {
 const remove = async(req, res) => {
 
     const { id } = req.params;
+
+    /*
+    console.log("ID recebido no DELETE:", id);
+    console.log("User recebido no DELETE:", req.userId); */ 
 
     try {
         
