@@ -10,6 +10,16 @@
 </head>
 <body>
     <section class="tasks">
+        <div class="filters">
+            <div class="btn-filters">
+                <button class="btn btn-primary" data-filter="all">Todas</button>
+                <button class="btn btn-primary" data-filter="pending">Pendentes</button>
+                <button class="btn btn-primary" data-filter="completed">Concluídas</button>
+            </div>
+
+            <input type="text" id="search" placeholder="Pesquisar tarefas..." aria-label="Pesquisar tarefas" />
+        </div>
+
         <div class="tasks-header">
             <h2>Minhas tarefas</h2>
             <button class="btn btn-primary" id="new-task">+ Nova tarefa</button>
