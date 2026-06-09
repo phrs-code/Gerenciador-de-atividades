@@ -38,7 +38,6 @@ def processar_relatorio(df_users, df_tasks):
     # Faz a junção das coleções com base no ID do usuário
     df_consolidado = pd.merge(df_tasks, df_users, left_on='userId', right_on='_id', suffixes=('_task', '_user'))
     
-    # --- Agregação para o Relatório ---
     # Agrupa por usuário e calcula as métricas de produtividade
     relatorio = df_consolidado.groupby(['userId', 'name']).agg(
         total_tarefas_concluidas=('tempo_conclusao_horas', 'count'),
