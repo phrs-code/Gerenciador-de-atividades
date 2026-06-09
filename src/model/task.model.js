@@ -1,30 +1,59 @@
 const mongoose = require('mongoose');
 
 const TaskSchema = new mongoose.Schema({
-    title: {
+    titulo: {
         type: String,
         required: true
     },
-    description: {
+    descricao: {
         type: String,
-        required: true
-    },
-    priority: {
-        type: String,
-        enum: ['baixa', 'média', 'alta'],
-        default: 'média',
         required: true
     },
     status: {
         type: String,
-        enum: ['não iniciado', 'em andamento', 'concluído'],
-        default: 'não iniciado',
+        enum: ['pendente', 'andamento', 'concluida'],
+        default: 'pendente',
         required: true
+    },
+    prioridade: {
+        type: String,
+        enum: ['baixa', 'media', 'alta'],
+        default: 'media',
+        required: true
+    },
+    id:{
+       type: Number 
+    },
+    categoria: {
+        type: String,
+        required: true
+    },
+    // n esquecer de removeeeeeer
+    responsavel: {
+        type: String        
+    },
+    papel_responsavel:{
+        type: String
+    },
+    publico_alvo: {
+        type: String,
+    },
+    estimativa_horas: {
+        type: Number
+    },
+    horas_gastas: {
+        type: Number
+    },
+    data_criacao: {
+        type: Date
+    },
+    data_conclusao: {
+        type: Date
     },
     userId: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'users',
-        required: true
+        required: false
     }
 },
 {

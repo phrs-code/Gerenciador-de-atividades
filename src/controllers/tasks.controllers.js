@@ -14,9 +14,10 @@ const getById = async(req, res) => {
 
     const { id } = req.params;
 
+    
     try {
         
-        const task = await taskModel.findOneAndDelete({ _id: id, userId: req.userId })
+        const task = await taskModel.findOne({ _id: id, userId: req.userId })
 
         if (!task){
             throw new Error();
@@ -35,15 +36,16 @@ const getById = async(req, res) => {
 
 const create = async(req, res) => {
 
-    const { title, description, priority, status } = req.body;
+    const { titulo, descricao, prioridade, status, categoria } = req.body;
 
     try {
         
         const task = await taskModel.create({
-        title,
-        description,
-        priority,
+        titulo,
+        descricao,
+        prioridade,
         status,
+        categoria,
         userId: req.userId,
     });
 
@@ -61,13 +63,13 @@ const create = async(req, res) => {
 const update = async(req, res) => {
 
     const { id } = req.params;
-    const { title, description, priority, status } = req.body;
+    const { titulo, descricao, prioridade, status, categoria } = req.body;
 
     try {
         // CORRIGIDO: findOneAndUpdate usando o filtro de dono da task
         const taskUpdated = await taskModel.findOneAndUpdate(
             { _id: id, userId: req.userId }, 
-            { title, description, priority, status }, // payload de atualização
+            { titulo, descricao, prioridade, status, categoria }, // payload de atualização
             { new: true }
         );
 
@@ -87,6 +89,10 @@ const update = async(req, res) => {
 const remove = async(req, res) => {
 
     const { id } = req.params;
+
+    /*
+    console.log("ID recebido no DELETE:", id);
+    console.log("User recebido no DELETE:", req.userId); */ 
 
     try {
         
